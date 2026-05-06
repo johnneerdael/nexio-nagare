@@ -50,6 +50,10 @@ const manifest = {
     "name": "Nexio Nagare",
     "logo": BASE_URL + "/favicon.png",
     "description": "English direct streams for anime, sourced from public providers (123anime, Anizone, Anichi, Animenosub, Animexin and more).",
+    "stremioAddonsConfig": {
+        "issuer": "https://stremio-addons.net",
+        "signature": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..JXQKygN9S1YfPjhQMPMnjA.OilkniXFkGVAwEuIEvQ4XmqzcJS5g9ExPpnngeKExSGZMXNI5_vMBDz5UOJ3N9c0B1ofYF2Ym8SXZCLS8u-Ih0lFVWujHJ7IlMdQEG2fstsdX4CKujAtmRnSoIr5qp7L.SG6iSf9qj6PIWcCnlZC9_w"
+    },
     "types": ["anime", "movie", "series"],
     "resources": [
         "catalog",
