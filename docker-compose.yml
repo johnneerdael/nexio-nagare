@@ -1,6 +1,17 @@
 #===============
 # DOCKER COMPOSE
 # Single addon container with persistent SQLite cache volume and rotated logs.
+#
+# To deploy behind a public domain (recommended) — set BASE_URL either via a
+# .env file next to this compose.yml or via your shell environment, e.g.:
+#
+#   echo 'BASE_URL=https://nagare.example.com' >> .env
+#   echo 'PORT=7002' >> .env
+#   docker compose up -d
+#
+# BASE_URL is what the addon emits in its Stremio manifest (`logo`, `bingeGroup`
+# helpers, install URLs from the configure page, etc.). If unset it falls back
+# to http://127.0.0.1:${PORT:-7002}, which only works for local-host installs.
 #===============
 name: "nexio-nagare"
 
@@ -10,9 +21,10 @@ services:
     container_name: "nexio_nagare"
     restart: "unless-stopped"
     ports:
-      - "7002:7002"
+      - "${PORT:-7002}:${PORT:-7002}"
     environment:
-      - "PORT=7002"
+      - "PORT=${PORT:-7002}"
+      - "BASE_URL=${BASE_URL:-http://127.0.0.1:7002}"
       - "NODE_ENV=production"
     volumes:
       - "nexio-nagare-cache:/app/data"
