@@ -12,10 +12,12 @@ test("configure page is rebranded — no torii / debrid leftovers", () => {
     assert.doesNotMatch(html, /Nyaa/i, "should not mention Nyaa");
 });
 
-test("configure page surfaces all three shipped providers as toggles", () => {
+test("configure page surfaces all five shipped providers as toggles", () => {
     assert.match(html, /value="onetwothreeanime"/, "missing 123anime provider toggle");
     assert.match(html, /value="anizone"/, "missing Anizone provider toggle");
     assert.match(html, /value="animenosub"/, "missing Animenosub provider toggle");
+    assert.match(html, /value="animepahe"/, "missing AnimePahe provider toggle");
+    assert.match(html, /value="gojo"/, "missing Gojo provider toggle");
     assert.match(html, /class="[^"]*provider-cb[^"]*"/);
 });
 
