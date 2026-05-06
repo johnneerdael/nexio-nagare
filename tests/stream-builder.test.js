@@ -25,7 +25,7 @@ test("buildProviderStreams emits a stream object with proxyHeaders when headers 
         Referer: "https://example.com/",
         Origin: "https://example.com"
     });
-    assert.match(s.name, /NEXIO NAGARE/);
+    assert.match(s.name, /^NAGARE \[/);
     assert.match(s.name, /123anime/);
     assert.match(s.name, /SUB/);
     assert.match(s.description, /One Piece/);
