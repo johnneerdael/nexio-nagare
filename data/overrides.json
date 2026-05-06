@@ -1,0 +1,10 @@
+{
+  "_": "Hand-mapped canonical-id → provider-slug overrides for popular cases where automated matching produces a wrong-variant pick. Keys are anilist:|anidb:|mal: prefixed.",
+  "anilist:20":     { "onetwothreeanime": "naruto",                              "anizone": "spjuxray" },
+  "anilist:21":     { "onetwothreeanime": "one-piece",                           "anizone": "uyyyn4kf" },
+  "anilist:1535":   {                                                            "anizone": "gxl93akq" },
+  "anilist:5114":   { "onetwothreeanime": "fullmetal-alchemist-brotherhood-dub", "anizone": "jy1tqr3g" },
+  "anilist:11061":  {                                                            "anizone": "7lferah2" },
+  "anilist:16498":  { "onetwothreeanime": "shingeki-no-kyojin",                  "anizone": "rwft8nfc" },
+  "anilist:101922": { "onetwothreeanime": "kimetsu-no-yaiba",                    "anizone": "knw0pvgz" }
+}

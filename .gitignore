@@ -1,0 +1,17 @@
+node_modules/
+stremio-addons-description.md
+
+# Local environment
+.env
+.env.local
+.env.*.local
+
+# Runtime data — keep the directory so committed defaults (overrides.json) stay tracked.
+data/*
+!data/overrides.json
+data/anime/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+data/overrides.user.json

@@ -1,0 +1,34 @@
+#===============
+# DOCKER COMPOSE
+# Single addon container with persistent SQLite cache volume and rotated logs.
+#===============
+name: "nexio-nagare"
+
+services:
+  nexio-nagare:
+    image: "ghcr.io/johnneerdael/nexio-nagare:latest"
+    container_name: "nexio_nagare"
+    restart: "unless-stopped"
+    ports:
+      - "7002:7002"
+    environment:
+      - "PORT=7002"
+      - "NODE_ENV=production"
+    volumes:
+      - "nexio-nagare-cache:/app/data"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - "stremio-network"
+
+networks:
+  stremio-network:
+    name: "stremio-internal-net"
+    driver: "bridge"
+
+volumes:
+  nexio-nagare-cache:
+    name: "nexio-nagare-cache"
