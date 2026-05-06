@@ -48,7 +48,7 @@ const manifest = {
     "id": "org.community.nexionagare",
     "version": "0.1.0",
     "name": "Nexio Nagare",
-    "logo": BASE_URL + "/nexio-nagare.png",
+    "logo": BASE_URL + "/favicon.png",
     "description": "English direct streams for anime, sourced from public providers (123anime, Anizone, Anichi, Animenosub, Animexin and more).",
     "types": ["anime", "movie", "series"],
     "resources": [
