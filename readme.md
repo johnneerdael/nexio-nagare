@@ -4,6 +4,10 @@ A Stremio addon that delivers **direct streams** for anime, sourced from public 
 
 The addon never proxies stream bytes — it returns the upstream M3U8 plus the headers Stremio's player needs to fetch them directly. Less load on the host, fewer moving parts.
 
+## Universal-formatter integration
+
+Streams now emit a parser-friendly shape (3-line name + 7-line description: `📄 synthetic-filename · 📡 provider+server · 🎬 canonical · 📺 episode-title · 📝 langs · 🌐 transport · 🎯 match · 🆔 cross-IDs`). The Nexio Android app recognises Nagare by manifest ID, applies the dedicated `NEXIO_NAGARE` parser branch, and renders the 🌊 Nagare drawable badge. Other Stremio clients still see a readable description — no breakage for non-Nexio users.
+
 ## Quick start
 
 ```bash
