@@ -258,8 +258,7 @@ builder.defineStreamHandler(async ({ type, id, config }) => {
 
         const resolved = await resolveCanonical(id);
         if (!resolved) return { "streams": [] };
-        const { canonical, episode } = resolved;
-        const animeTitle = canonical.englishTitle || canonical.mainTitle || "";
+        const { canonical, episode, season } = resolved;
 
         const matches = await withTimeout(
             dispatchProviders({
@@ -292,9 +291,16 @@ builder.defineStreamHandler(async ({ type, id, config }) => {
                 }
                 return buildProviderStreams({
                     providerStreams,
-                    providerDisplayName: provider.displayName,
-                    animeTitle,
-                    episode,
+                    provider,
+                    canonical,
+                    episode: adjustedEpisode,
+                    season: season || 1,
+                    match: {
+                        score: m.debug?.score ?? null,
+                        confidence: m.confidence || "MEDIUM",
+                        reasons: m.debug?.reasons || [m.source || "match"],
+                        source: m.source || "match"
+                    },
                     baseUrl: BASE_URL
                 });
             } catch (e) {

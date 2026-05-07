@@ -3,6 +3,10 @@ const assert = require("node:assert/strict");
 
 const { buildProviderStreams, languageCode, mapSubtitle } = require("../lib/stream-builder");
 
+const PROVIDER = { id: "animenosub", displayName: "Animenosub", displayHost: "animenosub.to" };
+const CANONICAL = { anilist: "21", mainTitle: "ONE PIECE", englishTitle: "ONE PIECE", year: 1999, format: "TV", episodeCount: 1100 };
+const MATCH = { score: 100, confidence: "HIGH", reasons: ["match"], source: "match" };
+
 test("languageCode maps common labels to ISO 639-2 codes", () => {
     assert.equal(languageCode("English"), "eng");
     assert.equal(languageCode("Japanese"), "jpn");
@@ -43,9 +47,7 @@ test("buildProviderStreams attaches the subtitles array to the Stremio stream", 
                 { src: "https://cdn.example.com/jp.vtt", label: "Japanese" }
             ]
         }],
-        providerDisplayName: "Animenosub",
-        animeTitle: "One Piece",
-        episode: 1,
+        provider: PROVIDER, canonical: CANONICAL, episode: 1, season: 1, match: MATCH,
         baseUrl: "http://127.0.0.1:7002"
     });
     assert.equal(out.length, 1);
@@ -57,9 +59,7 @@ test("buildProviderStreams attaches the subtitles array to the Stremio stream", 
 test("buildProviderStreams omits subtitles array when none provided", () => {
     const out = buildProviderStreams({
         providerStreams: [{ url: "https://x.com/x.m3u8", server: "X" }],
-        providerDisplayName: "X",
-        animeTitle: "Y",
-        episode: 1,
+        provider: PROVIDER, canonical: CANONICAL, episode: 1, season: 1, match: MATCH,
         baseUrl: "http://h"
     });
     assert.equal(out.length, 1);
