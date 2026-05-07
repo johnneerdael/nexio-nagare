@@ -33,6 +33,10 @@ Provider-supplied subtitle tracks (Anizone's multi-language, Animenosub's Englis
 ### 🔒 **Stateless configuration, no data path** 
 No user database. Your provider toggles + preferences are encoded into your private Stremio manifest URL. Stream URLs are returned with proxyHeaders so the Stremio player fetches directly from the upstream CDN — Nexio Nagare never touches the stream bytes.
 
+## Nexio Universal-formatter integration
+
+Streams now emit a parser-friendly shape (3-line name + 7-line description with structured fields: `📄 synthetic-filename · 📡 provider+server · 🎬 canonical · 📺 episode-title · 📝 langs · 🌐 transport · 🎯 match · 🆔 cross-IDs`). The Nexio Android app recognises Nagare by manifest ID, applies the dedicated `NEXIO_NAGARE` parser branch, and renders the 🌊 Nagare drawable badge. Other Stremio clients fall back to a still-readable description-only render — no breakage for non-Nexio users.
+
 ## Important notes:
 - The matcher's "drop on uncertainty" stance means a query may legitimately return zero streams from a provider that doesn't index the title or season-split version. Stremio aggregates from multiple addons — pair Nagare with another addon if you want belt-and-suspenders coverage on long-tail / niche titles.
 - Long-running shows (e.g. One Piece 1100+) may have slightly slower cold-path resolution because some providers cap their visible-episode window. Slug +  detail caches (90d / 24h) make warm-path requests near-instant.
