@@ -1,3 +1,13 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/johnneerdael/nexio-nagare/main/static/nexio-nagare.png" width="420" alt="Nexio Nagare">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Stremio-Addon-8a5a9e?style=for-the-badge&logo=stremio" alt="Stremio Addon">
+  <img src="https://img.shields.io/badge/GHCR-Ready-2496ED?style=for-the-badge&logo=docker" alt="GHCR Ready">
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License MIT">
+</p>
+
 #  🌊 Nexio Nagare
 Nexio Nagare is the direct-stream sibling of Nexio Torii (https://github.com/johnneerdael/nexio-torii). Where Torii brings you anime through torrent search and premium unlockers, Nagare delivers direct HLS streams from public anime sites — no debrid account, no torrent client, no addon-side data path. Developed for [NEXIO](https://github.com/johnneerdael/nexio) supported by [Stremio](https://www.stremio.com/)
 
