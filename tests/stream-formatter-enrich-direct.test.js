@@ -33,6 +33,7 @@ test("enrichDirectStream gathers source + track + canonical + match", () => {
     assert.equal(out.source.cdnHost, "mega-cloud.top");
     assert.equal(out.source.container, "HLS");
     assert.equal(out.source.quality, "1080p");
+    assert.equal(out.source.sizeBytes, null);
     assert.equal(out.track.kind, "sub");
     assert.equal(out.track.audioLanguage, "JPN");
     assert.equal(out.track.subtitleTracks.length, 1);
@@ -42,6 +43,16 @@ test("enrichDirectStream gathers source + track + canonical + match", () => {
     assert.equal(out.canonical.episode, 1);
     assert.equal(out.match.confidence, "HIGH");
     assert.equal(out.match.score, 200);
+});
+
+test("enrichDirectStream passes provider-published size bytes through", () => {
+    const out = enrichDirectStream({
+        provider: PROVIDER,
+        providerStream: { ...PROVIDER_STREAM, sizeBytes: 224 * 1024 * 1024 },
+        canonical: CANONICAL,
+        episode: 1, season: 1, match: MATCH
+    });
+    assert.equal(out.source.sizeBytes, 224 * 1024 * 1024);
 });
 
 test("enrichDirectStream marks dub when providerStream.dub=true", () => {

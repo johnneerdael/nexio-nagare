@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { buildProviderStreams } = require("../lib/stream-builder");
+const { attachDirectFileSizes, buildProviderStreams } = require("../lib/stream-builder");
 
 const PROVIDER = { id: "onetwothreeanime", displayName: "123anime", displayHost: "123anime.la", dub: "both" };
 const CANONICAL = {
@@ -75,4 +75,21 @@ test("buildProviderStreams returns empty array on empty input", () => {
 
 test("buildProviderStreams returns empty array when provider missing", () => {
     assert.deepEqual(buildProviderStreams({ providerStreams: [{ url: "x" }], provider: null, canonical: CANONICAL, episode: 1, season: 1, match: MATCH }), []);
+});
+
+test("attachDirectFileSizes probes direct file URLs and skips HLS", async () => {
+    const streams = await attachDirectFileSizes([
+        { url: "https://cdn.example.com/video.mp4", server: "direct" },
+        { url: "https://cdn.example.com/master.m3u8", server: "hls" },
+        { url: "https://cdn.example.com/known.mp4", server: "known", sizeBytes: 12 }
+    ], {
+        probe: async url => {
+            assert.equal(url, "https://cdn.example.com/video.mp4");
+            return 45;
+        }
+    });
+
+    assert.equal(streams[0].sizeBytes, 45);
+    assert.equal(streams[1].sizeBytes, undefined);
+    assert.equal(streams[2].sizeBytes, 12);
 });

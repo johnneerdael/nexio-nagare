@@ -58,3 +58,12 @@ test("formatNagareStream uses 🎙 DUB on dub track", () => {
     assert.match(out.name, /🎙 DUB/);
     assert.match(out.description, /\[Gojo\] ONE PIECE - S1E1 \[1080p HLS DUB\]/);
 });
+
+test("formatNagareStream surfaces direct stream size when known", () => {
+    const sized = {
+        ...ENRICHED,
+        source: { ...ENRICHED.source, sizeBytes: 224 * 1024 * 1024 }
+    };
+    const out = formatNagareStream(sized, { url: "https://x/y.m3u8", headers: {} });
+    assert.match(out.description, /💾 224 MB/);
+});

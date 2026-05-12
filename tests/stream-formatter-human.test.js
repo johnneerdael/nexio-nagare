@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { humanQuality, languageFlag, languageCode3, dubGlyph, containerFromUrl, cdnHostFromUrl } = require("../lib/stream-formatter/human-format");
+const { humanSize, parseSizeToBytes, splitQualityAndSize } = require("../lib/stream-size");
 
 test("humanQuality normalises common forms", () => {
     assert.equal(humanQuality("1080p"), "1080p");
@@ -40,4 +41,21 @@ test("cdnHostFromUrl extracts the bare hostname", () => {
     assert.equal(cdnHostFromUrl("https://cdn.example.com/x.m3u8"), "cdn.example.com");
     assert.equal(cdnHostFromUrl("https://vault-04.uwucdn.top/stream/x"), "vault-04.uwucdn.top");
     assert.equal(cdnHostFromUrl("invalid"), "unknown");
+});
+
+test("splitQualityAndSize extracts provider-published sizes from quality labels", () => {
+    assert.deepEqual(splitQualityAndSize("1080p (224MB)"), {
+        quality: "1080p",
+        sizeBytes: 224 * 1024 * 1024
+    });
+    assert.deepEqual(splitQualityAndSize("1080p (122MB) Eng"), {
+        quality: "1080p",
+        sizeBytes: 122 * 1024 * 1024
+    });
+    assert.equal(splitQualityAndSize("multi-quality").sizeBytes, null);
+});
+
+test("humanSize formats stream byte counts", () => {
+    assert.equal(parseSizeToBytes("1.5 GB"), 1.5 * 1024 * 1024 * 1024);
+    assert.equal(humanSize(224 * 1024 * 1024), "224 MB");
 });

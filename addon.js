@@ -17,7 +17,7 @@ const {
 } = require("./lib/anilist");
 const { fromBase64Safe, parseConfig, toBase64Safe } = require("./lib/config");
 const { REGISTRY, REGISTRY_BY_ID, getActiveProviders } = require("./lib/providers");
-const { buildProviderStreams } = require("./lib/stream-builder");
+const { attachDirectFileSizes, buildProviderStreams } = require("./lib/stream-builder");
 const { resolveCanonical } = require("./lib/identity/resolver");
 const { dispatchProviders, invalidateCachedSlug, markSlugSucceeded } = require("./lib/dispatch");
 
@@ -289,8 +289,9 @@ builder.defineStreamHandler(async ({ type, id, config }) => {
                 if (Array.isArray(providerStreams) && providerStreams.length > 0) {
                     markSlugSucceeded({ canonical, providerId: m.providerId, opts: { preferDub: Boolean(userConfig.preferDub) } });
                 }
+                const sizedProviderStreams = await attachDirectFileSizes(providerStreams);
                 return buildProviderStreams({
-                    providerStreams,
+                    providerStreams: sizedProviderStreams,
                     provider,
                     canonical,
                     episode: adjustedEpisode,
