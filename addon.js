@@ -83,6 +83,26 @@ const manifest = {
     "behaviorHints": { "configurable": true, "configurationRequired": false }
 };
 
+const CATALOG_CONFIG_KEYS = {
+    nexio_seasonal_series: "showSeasonalSeries",
+    nexio_airing_series: "showAiringSeries",
+    nexio_trending_series: "showTrendingSeries",
+    nexio_top_series: "showTopSeries",
+    nexio_trending_movie: "showTrendingMovies",
+    nexio_top_movie: "showTopMovies",
+    nexio_search: "showSearchCatalog"
+};
+
+function configuredManifest(config) {
+    const userConfig = parseConfig(config);
+    const catalogs = manifest.catalogs.filter(cat => {
+        const key = CATALOG_CONFIG_KEYS[cat.id];
+        if (!key) return true;
+        return userConfig[key] !== false;
+    });
+    return { ...manifest, catalogs };
+}
+
 const builder = new addonBuilder(manifest);
 
 //===============
@@ -117,7 +137,7 @@ builder.defineCatalogHandler(async ({ type, id, extra, config }) => {
             return { "metas": applyTitlePreference(results.filter(m => m.type === type), userConfig), "cacheMaxAge": 86400 };
         }
 
-        if (id === "nexio_search" && extra.search) {
+        if (id === "nexio_search" && extra.search && userConfig.showSearchCatalog !== false) {
             const [anilistRes, cinemetaRes] = await Promise.all([
                 searchAnime(extra.search).catch(() => []),
                 axios.get(`https://v3-cinemeta.strem.io/catalog/${type}/top/search=${encodeURIComponent(extra.search)}.json`, { timeout: 4000 })
@@ -320,4 +340,4 @@ builder.defineStreamHandler(async ({ type, id, config }) => {
     }
 });
 
-module.exports = { "addonInterface": builder.getInterface(), manifest, parseConfig };
+module.exports = { "addonInterface": builder.getInterface(), configuredManifest, manifest, parseConfig };

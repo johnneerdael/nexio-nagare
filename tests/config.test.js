@@ -18,6 +18,7 @@ test("normalizeConfig defaults catalogs on and useEnglishTitles on", () => {
     assert.equal(normalized.showTopSeries, true);
     assert.equal(normalized.showTrendingMovies, true);
     assert.equal(normalized.showTopMovies, true);
+    assert.equal(normalized.showSearchCatalog, true);
     assert.equal(normalized.preferDub, false);
     assert.equal(normalized.providers, null);
 });
@@ -26,11 +27,13 @@ test("normalizeConfig respects explicit catalog disables", () => {
     const normalized = normalizeConfig({
         showSeasonalSeries: false,
         showTopMovies: false,
+        showSearchCatalog: false,
         useEnglishTitles: false,
         preferDub: true
     });
     assert.equal(normalized.showSeasonalSeries, false);
     assert.equal(normalized.showTopMovies, false);
+    assert.equal(normalized.showSearchCatalog, false);
     assert.equal(normalized.useEnglishTitles, false);
     assert.equal(normalized.preferDub, true);
 });

@@ -264,6 +264,10 @@
                         <input type="checkbox" id="showTopMovies" class="glass-checkbox" checked>
                         <span class="text-[11px] font-mono text-gray-300">Top-rated movies</span>
                     </label>
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" id="showSearchCatalog" class="glass-checkbox" checked>
+                        <span class="text-[11px] font-mono text-gray-300">Search provider</span>
+                    </label>
                 </div>
             </section>
 
@@ -315,7 +319,8 @@
                 showTrendingSeries: document.getElementById("showTrendingSeries").checked,
                 showTopSeries: document.getElementById("showTopSeries").checked,
                 showTrendingMovies: document.getElementById("showTrendingMovies").checked,
-                showTopMovies: document.getElementById("showTopMovies").checked
+                showTopMovies: document.getElementById("showTopMovies").checked,
+                showSearchCatalog: document.getElementById("showSearchCatalog").checked
             };
         }
         function toBase64Safe(str) {

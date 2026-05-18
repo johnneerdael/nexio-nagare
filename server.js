@@ -3,18 +3,8 @@ const express = require("express");
 const fs = require("node:fs");
 const path = require("path");
 const { getRouter } = require("stremio-addon-sdk");
-const { addonInterface, manifest } = require("./addon");
-const { parseConfig } = require("./lib/config");
+const { addonInterface, configuredManifest } = require("./addon");
 const { applyHttpCacheHeaders } = require("./lib/cache/http-cache");
-
-const CATALOG_CONFIG_KEYS = {
-    nexio_seasonal_series: "showSeasonalSeries",
-    nexio_airing_series: "showAiringSeries",
-    nexio_trending_series: "showTrendingSeries",
-    nexio_top_series: "showTopSeries",
-    nexio_trending_movie: "showTrendingMovies",
-    nexio_top_movie: "showTopMovies"
-};
 const { refreshAnimeMap } = require("./lib/identity/anime-map-generator");
 const { defaultAnimeMapPath } = require("./lib/identity/anime-map");
 const { reloadAnimeMap } = require("./lib/identity/resolver");
@@ -65,13 +55,7 @@ app.get("/sub/:payload", createSubHandler());
 app.get("/:config/manifest.json", (req, res, next) => {
     try {
         const decoded = JSON.parse(req.params.config);
-        const userConfig = parseConfig(decoded);
-        const filteredCatalogs = manifest.catalogs.filter(cat => {
-            const key = CATALOG_CONFIG_KEYS[cat.id];
-            if (!key) return true;
-            return userConfig[key] !== false;
-        });
-        res.json({ ...manifest, catalogs: filteredCatalogs });
+        res.json(configuredManifest(decoded));
     } catch (e) {
         next();
     }

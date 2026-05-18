@@ -38,7 +38,8 @@ test("configure page includes catalog visibility toggles wired to config keys", 
         "showTrendingSeries",
         "showTopSeries",
         "showTrendingMovies",
-        "showTopMovies"
+        "showTopMovies",
+        "showSearchCatalog"
     ].forEach(id => assert.match(html, new RegExp(`id="${id}"`), `missing ${id}`));
 });
 
